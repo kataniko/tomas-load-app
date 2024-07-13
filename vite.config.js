@@ -49,6 +49,11 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      external: ['@splinetool/runtime']
+    },
+  },
   server: {
     port: 3000,
   },
