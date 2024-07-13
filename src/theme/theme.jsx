@@ -1,47 +1,45 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
+
   palette: {
-    mode: "dark", // Default mode (can be toggled between "light" and "dark" using state)
+    mode: "dark",
     primary: {
-      main: "hsl(209, 23%, 22%)", // Dark Blue (Dark Mode Elements)
+      main: "hsl(209, 93%, 80%)", // Slightly darker than previous
     },
     background: {
-      default: "hsl(0, 0%, 98%)", // Very Light Gray (Light Mode Background)
-      paper: "hsl(207, 26%, 17%)", // Very Dark Blue (Dark Mode Background)
+      default: "hsl(0, 0%, 98%)", // Very light gray
+      paper: "hsl(207, 26%, 17%)", // Very dark blue
     },
     text: {
-      primary: "hsl(200, 15%, 8%)", // Very Dark Blue (Light Mode Text)
-      secondary: "hsl(0, 0%, 52%)", // Dark Gray (Light Mode Input)
+      primary: "hsl(0, 0%, 100%)", // White or very light color for text on dark background
+      secondary: "hsl(0, 0%, 70%)", // Light gray for secondary text
     },
   },
+  
+
   typography: {
-    fontFamily: "'Nunito Sans', sans-serif", // Default Font Family
-    fontSize: 14, // Body Copy: Homepage Items
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontSize: 14,
     main: {
-      // Detail Page Heading
       fontFamily: "'Orbitron', sans-serif",
-      fontSize: "4rem", // Detail Page Heading Font Size
-      fontWeight: 700, // Detail Page Heading Font Weight (700 = Bold)
+      fontSize: "4rem",
+      fontWeight: 700,
     },
     h1: {
-      // Detail Page Heading
       fontFamily: "'Orbitron', sans-serif",
-      fontSize: "2rem", // Detail Page Heading Font Size
-      fontWeight: 700, // Detail Page Heading Font Weight (700 = Bold)
+      fontSize: "2rem",
+      fontWeight: 700,
     },
     h2: {
-      // Detail Page Subheading
       fontFamily: "'Orbitron', sans-serif",
-      fontSize: "1.5rem", // Detail Page Subheading Font Size
-      fontWeight: 400, // Detail Page Subheading Font Weight (400 = Regular)
+      fontSize: "1.5rem",
+      fontWeight: 400,
     },
     body1: {
-      // Body Text
-      fontFamily: "'Nunito Sans', sans-serif",
-      fontWeight: 300, // Body Text Font Weight (300 = Light)
+      fontFamily: "'Orbitron', sans-serif",
+      fontWeight: 400,
     },
-    // Add more typography styles as needed
   },
 });
 

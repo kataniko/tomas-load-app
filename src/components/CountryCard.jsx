@@ -11,44 +11,66 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    height: "100%", // Adjusted to make card take full height of its container
-    border: `1px solid ${theme.palette.primary.main}`, // Use theme primary color
-    opacity: 0.5, // Initial transparency
-    transition: "opacity 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out", // Transition for smooth effect
-    backgroundColor: "transparent", // Initial background color
-    '&:hover': {
-      opacity: 1, // Full opacity on hover
-      backgroundColor: theme.palette.background.paper, // Use theme background color on hover
-      borderColor: theme.palette.primary.main, // Border color change on hover using theme
-      boxShadow: `0 0 10px ${theme.palette.primary.main}`, // Shining border effect using theme
+    height: "100%",
+    border: `1px solid ${theme.palette.primary.main}`,
+    opacity: 0.5,
+    transition:
+      "opacity 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+    backgroundColor: "transparent",
+    "&:hover": {
+      opacity: 1,
+      backgroundColor: theme.palette.background.paper,
+      borderColor: theme.palette.primary.main,
+      boxShadow: `0 0 10px ${theme.palette.primary.main}`,
     },
   },
   media: {
-    flex: "0 0 auto", // Ensures media does not grow or shrink
+    flex: "0 0 auto",
     height: "180px",
     width: "100%",
-    objectFit: "cover", // Ensures the image covers the entire area
-    transition: "transform 0.3s ease-in-out, filter 0.3s ease-in-out", // Add filter transition
-    '&:hover': {
-      filter: "brightness(1.2)", // Increase brightness on hover
+    objectFit: "cover",
+    transition: "transform 0.3s ease-in-out, filter 0.3s ease-in-out",
+    "&:hover": {
+      filter: "brightness(1.2)",
     },
   },
   content: {
     flex: "1 0 auto",
     textAlign: "initial",
-  
-    padding: theme.spacing(2), // Example padding for content
+    padding: theme.spacing(2),
   },
   title: {
     marginBottom: theme.spacing(1),
     textTransform: "capitalize",
-      color: "white",
+    color: "white",
+    fontWeight: 400,
+  },
+  label: {
+    marginBottom: theme.spacing(0.5), // Adjust spacing between labels and values
+    color: theme.palette.text.secondary,
     fontWeight: 600,
+  },
+  value: {
+    marginBottom: theme.spacing(1), // Adjust spacing between values
+    color: theme.palette.text.primary,
+    fontWeight: 400,
   },
 }));
 
 const CountryCard = ({ country }) => {
   const classes = useStyles();
+
+  // Function to format population number
+  const formatPopulation = (population) => {
+    if (population >= 1e6) {
+      return (population / 1e6).toFixed(1) + " Million";
+    } else if (population >= 1e3) {
+      return (population / 1e3).toFixed(1) + " Thousand";
+    } else {
+      return population.toString();
+    }
+  };
+
   return (
     <Card className={classes.card}>
       <Link
@@ -62,24 +84,73 @@ const CountryCard = ({ country }) => {
           alt={`${country.name.common} flag`}
         />
         <CardContent className={classes.content}>
-        
-
-           <Typography variant="body1" component="h6" className={classes.title}>
-            Country: {country.name.common}
-          </Typography>
-        
-            <Typography variant="h6" component="h3" className={classes.title}>
-            Population: {country.population}
+          <Typography variant="body1" component="div">
+            <Typography
+              variant="body1"
+              component="span"
+              className={classes.label}
+            >
+              Country:
+            </Typography>{" "}
+            <Typography
+              variant="body1"
+              component="span"
+              className={classes.value}
+            >
+              {country.name.common}
             </Typography>
-          
-               <Typography variant="h6" component="h3" className={classes.title}>
-            Capital: {country.capital}
           </Typography>
-        
-          <Typography variant="h6" component="h3" className={classes.title}>
-           Region:  {country.region}
+
+          <Typography variant="body1" component="div">
+            <Typography
+              variant="body1"
+              component="span"
+              className={classes.label}
+            >
+              Population:
+            </Typography>{" "}
+            <Typography
+              variant="body1"
+              component="span"
+              className={classes.value}
+            >
+              {formatPopulation(country.population)}
+            </Typography>
           </Typography>
-        
+
+          <Typography variant="body1" component="div">
+            <Typography
+              variant="body1"
+              component="span"
+              className={classes.label}
+            >
+              Capital:
+            </Typography>{" "}
+            <Typography
+              variant="body1"
+              component="span"
+              className={classes.value}
+            >
+              {country.capital}
+            </Typography>
+          </Typography>
+
+          <Typography variant="body1" component="div">
+            <Typography
+              variant="body1"
+              component="span"
+              className={classes.label}
+            >
+              Region:
+            </Typography>{" "}
+            <Typography
+              variant="body1"
+              component="span"
+              className={classes.value}
+            >
+              {country.region}
+            </Typography>
+          </Typography>
         </CardContent>
       </Link>
     </Card>

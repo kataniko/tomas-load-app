@@ -1,9 +1,75 @@
+// Home.jsx
 import React, { useState, useEffect } from "react";
 import { getAllCountries } from "../services/countryService";
-import CountryCard from "../components/CountryCard";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { Box, Grid, Input, Select, MenuItem, Typography } from "@mui/material";
+import Header from "../components/Header";
+import CountryList from "../components/CountryList";
+import CustomPagination from "../components/Pagination";
+import { Box } from "@mui/material";
+import { motion } from "framer-motion";
+import { makeStyles } from "@mui/styles";
+import { useTheme } from "@mui/material/styles";
 
+const useStyles = makeStyles((theme) => ({
+  container: {
+    maxWidth: 1440,
+    marginTop: theme.spacing(2),
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: theme.spacing(3),
+  },
+  title: {
+    color: theme.palette.common.white,
+    fontSize: "2rem",
+    fontWeight: 600,
+  },
+  searchInput: {
+    marginRight: theme.spacing(2),
+    width: 250,
+    "& .MuiOutlinedInput-input": {
+      color: theme.palette.common.white,
+    },
+    "& .MuiInputLabel-root": {
+      color: theme.palette.common.white,
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: theme.palette.primary.main,
+      },
+      "&:hover fieldset": {
+        borderColor: theme.palette.primary.dark,
+      },
+    },
+  },
+  select: {
+    minWidth: 200,
+    color: theme.palette.common.white,
+    "& .MuiInputLabel-root": {
+      color: theme.palette.common.white,
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: theme.palette.primary.main,
+      },
+      "&:hover fieldset": {
+        borderColor: theme.palette.primary.dark,
+      },
+    },
+  },
+  countryList: {
+    "& .country-list": {
+      marginTop: theme.spacing(2),
+    },
+  },
+  pagination: {
+    marginTop: theme.spacing(3),
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
 
 const Home = () => {
   const [countries, setCountries] = useState([]);
@@ -11,6 +77,12 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [region, setRegion] = useState("");
+  const [startAnimation, setStartAnimation] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const countriesPerPage = 8;
+
+  const classes = useStyles();
+  const theme = useTheme();
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -30,9 +102,12 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (region === "" || country.region === region)
+    const filtered = countries.filter(
+      (country) =>
+        country.name.common
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) &&
+        (region === "" || country.region === region)
     );
     setFilteredCountries(filtered);
   }, [searchTerm, region, countries]);
@@ -45,51 +120,59 @@ const Home = () => {
     setSearchTerm(event.target.value);
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setStartAnimation(true);
+    }, 5000); // 5000ms = 5 seconds
+
+    return () => clearTimeout(timer); // Clear the timeout if the component unmounts
+  }, []);
+
+  // Logic for pagination
+  const indexOfLastCountry = currentPage * countriesPerPage;
+  const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
+  const currentCountries = filteredCountries.slice(
+    indexOfFirstCountry,
+    indexOfLastCountry
+  );
+
+  const paginate = (event, value) => {
+    setCurrentPage(value);
+  };
+
   return (
     <>
-      <Box sx={{ height: "100vh", alignContent: "center" }}>
-        <Typography color={"white"} variant="main">Country Finder</Typography>
-      </Box>
-      <Box sx={{ maxWidth: 1440, marginTop: 2 }}>
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-           <>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
-              <Typography color={"white"} variant="h1">{region}</Typography>
-              <div>
-              <Input
-                placeholder="Search"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                sx={{ minWidth: "300px", border: "1px solid white", color: "white", marginRight: 2, fontSize: "1.2rem" }}
-                />
-              <Select
-                value={region}
-                onChange={handleRegionChange}
-                displayEmpty
-                inputProps={{ "aria-label": "Select region" }}
-                sx={{ minWidth: 200, color: "white", fontSize: "1.2rem" }}
-                >
-                <MenuItem value="">All Regions</MenuItem>
-                <MenuItem value="Africa">Africa</MenuItem>
-                <MenuItem value="Americas">Americas</MenuItem>
-                <MenuItem value="Asia">Asia</MenuItem>
-                <MenuItem value="Europe">Europe</MenuItem>
-                <MenuItem value="Oceania">Oceania</MenuItem>
-              </Select>
-              </div>
-            </Box>
-            <Grid container spacing={3} className="country-list">
-              {filteredCountries.map((country) => (
-                <Grid key={country.cca3} item xs={12} sm={6} md={4} lg={3}>
-                  <CountryCard country={country} />
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        )}
-      </Box>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={startAnimation ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 1, ease: "easeInOut" }}
+      >
+        <Box className={classes.container}>
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <Header
+                region={region}
+                handleSearchChange={handleSearchChange}
+                handleRegionChange={handleRegionChange}
+                classes={classes}
+              />
+              <CountryList
+                currentCountries={currentCountries}
+                classes={classes}
+              />
+              <CustomPagination
+                filteredCountries={filteredCountries}
+                currentPage={currentPage}
+                paginate={paginate}
+                countriesPerPage={countriesPerPage}
+                classes={classes}
+              />
+            </>
+          )}
+        </Box>
+      </motion.div>
     </>
   );
 };
