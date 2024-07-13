@@ -23,8 +23,7 @@ function App() {
           className="spline-background"
           scene="https://prod.spline.design/oYUS-kLsxP3FpE8y/scene.splinecode"
         />
-        <Sidebar />
-        {/* <AppbarComponent /> */}
+        {/* <Sidebar /> */}
         <Router>
           <Routes>
             <Route

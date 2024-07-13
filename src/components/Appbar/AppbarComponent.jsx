@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Spline from "@splinetool/react-spline";
 
 const AppbarComponent = ({
   searchTerm,
@@ -23,10 +24,8 @@ const AppbarComponent = ({
     setRegion(e.target.value);
   };
 
-
-
   return (
-    <Box sx={{ flexGrow: 1, backgroundColor:"transparent" }}>
+    <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
           <InputBase

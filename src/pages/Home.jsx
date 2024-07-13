@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getAllCountries } from "../services/countryService";
 import CountryCard from "../components/CountryCard";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { Box, Grid, Input, Select, MenuItem } from "@mui/material";
-import MainText from "../components/MainText";
+import { Box, Grid, Input, Select, MenuItem, Typography } from "@mui/material";
+
 
 const Home = () => {
   const [countries, setCountries] = useState([]);
@@ -48,48 +48,46 @@ const Home = () => {
   return (
     <>
       <Box sx={{ height: "100vh", alignContent: "center" }}>
-        <div style={{ height: "50%" }}>
-          <MainText />
-        </div>
-      </Box>
-      <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2, width:"100%" }}>
-        <Input
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          sx={{ border: "1px solid white", borderRadius: 7, color: "white", marginRight: 1 }}
-        />
-        <Select
-          value={region}
-          onChange={handleRegionChange}
-          displayEmpty
-          inputProps={{ "aria-label": "Select region" }}
-          sx={{ minWidth: 120, color: "white" }}
-        >
-          <MenuItem value="">All Regions</MenuItem>
-          <MenuItem value="Africa">Africa</MenuItem>
-          <MenuItem value="Americas">Americas</MenuItem>
-          <MenuItem value="Asia">Asia</MenuItem>
-          <MenuItem value="Europe">Europe</MenuItem>
-          <MenuItem value="Oceania">Oceania</MenuItem>
-        </Select>
+        <Typography color={"white"} variant="main">Country Finder</Typography>
       </Box>
       <Box sx={{ maxWidth: 1440, marginTop: 2 }}>
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <Grid
-            justifyContent="center"
-            container
-            spacing={3}
-            className="country-list"
-          >
-            {filteredCountries.map((country) => (
-              <Grid key={country.cca3} item xs={10} sm={6} md={6} lg={3}>
-                <CountryCard country={country} />
-              </Grid>
-            ))}
-          </Grid>
+           <>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
+              <Typography color={"white"} variant="h1">{region}</Typography>
+              <div>
+              <Input
+                placeholder="Search"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                sx={{ minWidth: "300px", border: "1px solid white", color: "white", marginRight: 2, fontSize: "1.2rem" }}
+                />
+              <Select
+                value={region}
+                onChange={handleRegionChange}
+                displayEmpty
+                inputProps={{ "aria-label": "Select region" }}
+                sx={{ minWidth: 200, color: "white", fontSize: "1.2rem" }}
+                >
+                <MenuItem value="">All Regions</MenuItem>
+                <MenuItem value="Africa">Africa</MenuItem>
+                <MenuItem value="Americas">Americas</MenuItem>
+                <MenuItem value="Asia">Asia</MenuItem>
+                <MenuItem value="Europe">Europe</MenuItem>
+                <MenuItem value="Oceania">Oceania</MenuItem>
+              </Select>
+              </div>
+            </Box>
+            <Grid container spacing={3} className="country-list">
+              {filteredCountries.map((country) => (
+                <Grid key={country.cca3} item xs={12} sm={6} md={4} lg={3}>
+                  <CountryCard country={country} />
+                </Grid>
+              ))}
+            </Grid>
+          </>
         )}
       </Box>
     </>

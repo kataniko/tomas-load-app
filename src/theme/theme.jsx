@@ -21,7 +21,7 @@ const theme = createTheme({
     main: {
       // Detail Page Heading
       fontFamily: "'Orbitron', sans-serif",
-      fontSize: "3rem", // Detail Page Heading Font Size
+      fontSize: "4rem", // Detail Page Heading Font Size
       fontWeight: 700, // Detail Page Heading Font Weight (700 = Bold)
     },
     h1: {
