@@ -21,3 +21,15 @@ export const getCountryByName = async (name) => {
     throw error;
   }
 };
+
+export const getCountriesByRegion = async (region) => {
+  try {
+    const response = await axios.get(`${API_URL}/region/${region}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching countries by region:", error);
+    throw error;
+  }
+};
+
+

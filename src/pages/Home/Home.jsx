@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { TimerContext } from "../../Context/TimeContext"; // Import your TimerContext
 import useStyles from "./useStyles";
-import { getAllCountries } from "../../services/countryService";
+import { getAllCountries, getCountriesByRegion } from "../../services/countryService";
 
 const Home = () => {
   const { hasAppRendered, setAppRendered } = useContext(TimerContext);
@@ -22,41 +22,39 @@ const Home = () => {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    const fetchCountries = async () => {
-      setLoading(true);
-      try {
-        const data = await getAllCountries();
-        setCountries(data);
-        setFilteredCountries(data);
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-      } finally {
-        setLoading(false);
+  const fetchCountries = async () => {
+    setLoading(true);
+    try {
+      let data;
+      if (regionFilter) {
+        data = await getCountriesByRegion(regionFilter);
+      } else {
+        data = await getAllCountries();
       }
-    };
+      setCountries(data);
+      setFilteredCountries(data);
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCountries();
-  }, []);
+  }, [regionFilter]);
 
   useEffect(() => {
     const applyFilters = () => {
-      const filtered = countries.filter((country) => {
-        const matchesSearchTerm = country.name.common
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-        const matchesRegion =
-          regionFilter === "" || country.region === regionFilter;
-
-        return matchesSearchTerm && matchesRegion;
-      });
-
+      const filtered = countries.filter((country) =>
+        country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
+      );
       setFilteredCountries(filtered);
       setCurrentPage(1); // Reset currentPage to 1 whenever filters change
     };
 
     applyFilters();
-  }, [searchTerm, regionFilter, countries]);
+  }, [searchTerm, countries]);
 
   useEffect(() => {
     let timer;
@@ -68,7 +66,7 @@ const Home = () => {
       timer = setTimeout(() => {
         setStartAnimation(true);
         setAppRendered();
-      }, 5000); // Timer duration if hasAppRendered is false
+      }, 3000); // Timer duration if hasAppRendered is false
     }
 
     return () => clearTimeout(timer);
@@ -97,9 +95,10 @@ const Home = () => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={startAnimation ? { opacity: 1, y: 0 } : {}}
+        initial={{ opacity: 0, y: 25 }}
+        animate={startAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 200 }}
         transition={{ duration: 1, ease: "easeInOut" }}
+        style={{ pointerEvents: startAnimation ? 'auto' : 'none' }}
       >
         <Box className={classes.container}>
           {loading ? (

@@ -4,7 +4,6 @@ import "./App.css";
 
 import theme from "./theme/theme";
 import BackgroundAnimation from "./components/BackgroundAnimation";
-import Sidebar from "./components/Appbar/Appbar";
 import MainContent from "./components/MainContent";
 
 function App() {

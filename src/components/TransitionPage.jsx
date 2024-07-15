@@ -14,9 +14,9 @@ const TransitionPage = () => {
         position: 'fixed',
         top: 0,
         left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'black', // semi-transparent white
+        width: '0vw',
+        height: '0vh',
+        backgroundColor: 'transparent', // semi-transparent white
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
