@@ -1,6 +1,6 @@
 # Country Finder (React)
 
-## Funcionalidades
+## Functionalities
 
 - **Search:** Find a country using the search bar.
 
