@@ -5,18 +5,18 @@ Este projeto React é uma APP para encontrar informações detalhadas sobre paí
 
 ## Funcionalidades
 
-- **Pesquisa:** Encontre rapidamente um país pelo nome na barra de pesquisa.
+- **Search:** Find a country using the search bar.
 
-- **Informações Detalhadas:** Visualize informações essenciais sobre cada país, incluindo:
-  - Nome oficial
+- **Detailed Inforations:** Check specified information about each country:
+  - Oficial Name
   - Capital
-  - População
-  - Região
-  - Moedas
+  - Population
+  - Region
+  - Currencies
   - Borders
-  - Bandeira etc..
+  - Flags etc..
 
-## Tecnologias Utilizadas
+## Techs used
 
 - **React:** 
 - **Axios:** HTTP client to fetch data .
