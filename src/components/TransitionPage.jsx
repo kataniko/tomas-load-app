@@ -1,5 +1,7 @@
 // TransitionPage.js
 
+//I was supposed to use this transition page but i gave up from the idea
+
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -24,8 +26,6 @@ const TransitionPage = () => {
         zIndex: 9999 // Ensures the loading screen is on top of other content
       }}
     >
-     
-     
     </motion.div>
   );
 };

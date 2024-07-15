@@ -1,5 +1,7 @@
 import React, { createContext, useState } from "react";
 
+//I created this file to allow users to have 2 render times , one to see the the background animation when the app renders the first time and another to when someone comeback from the details page .
+
 const TimerContext = createContext();
 
 const TimerProvider = ({ children }) => {

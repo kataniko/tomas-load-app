@@ -1,5 +1,9 @@
 import { createTheme } from "@mui/material/styles";
 
+//Themes from MUI 
+// I know i didnt used all the colors from the file you guys added , and that it doesnt has the dark mode with the toggle . 
+//  Even tho it doesnt i introduced it in the code
+
 const theme = createTheme({
   palette: {
     mode: "dark",

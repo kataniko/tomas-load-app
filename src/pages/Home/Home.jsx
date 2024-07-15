@@ -22,6 +22,7 @@ const Home = () => {
 
   const classes = useStyles();
 
+  //fetch API using axios to get all countries
   const fetchCountries = async () => {
     setLoading(true);
     try {
@@ -44,6 +45,7 @@ const Home = () => {
     fetchCountries();
   }, [regionFilter]);
 
+  //Filters UseEffect
   useEffect(() => {
     const applyFilters = () => {
       const filtered = countries.filter((country) =>
@@ -56,6 +58,7 @@ const Home = () => {
     applyFilters();
   }, [searchTerm, countries]);
 
+  //Animation timer function
   useEffect(() => {
     let timer;
     if (hasAppRendered) {

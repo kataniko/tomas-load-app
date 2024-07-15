@@ -2,6 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import Spline from "@splinetool/react-spline";
 
+//Background Animation using Spline and Framer-Motion
+
 const BackgroundAnimation = () => {
   return (
     <motion.div

@@ -8,6 +8,8 @@ import { makeStyles } from "@mui/styles";
 import { motion } from "framer-motion";
 import { RandomReveal } from "react-random-reveal";
 
+//Card styles
+
 const useStyles = makeStyles((theme) => ({
   card: {
     display: "flex",
@@ -55,11 +57,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CountryCard = ({ country }) => {
+  
   const classes = useStyles();
   const [isHovered, setIsHovered] = useState(false);
   const [capital, setCapital] = useState(country.capital); // Split capital into an array of characters
 
-  //reparei que havia um field a vir da api que precisava de ser formatado , senão a lib iterava sempre a mesma posição
+  //I noticed that the capital field needed to be formatted to string otherwise the text animation would iterate only one position instead of each letter
   if (typeof country.capital !== "string") {
     country.capital = String(country.capital);
   }
