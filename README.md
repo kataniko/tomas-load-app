@@ -1,8 +1,5 @@
 # Country Finder (React)
 
-Este projeto React é uma APP para encontrar informações detalhadas sobre países ao redor do mundo. 
-É possivel filtrar por região e fazer pesquisa pelo nome de cada um dos países .
-
 ## Funcionalidades
 
 - **Search:** Find a country using the search bar.
