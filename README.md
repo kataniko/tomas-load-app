@@ -26,7 +26,7 @@
 
 1. Rep Clone:
 
-   git clone https://github.com/seu-usuario/country-finder.git
+   git clone https://github.com/kataniko/tomas-load-app.git
 
 2. Dependencies Installation: 
 
